@@ -1,5 +1,5 @@
 [workspace]
-members = ["unit_struct", "build_script", "stateful"]
+members = ["unit_struct", "build_script", "stateful", "async_trait"]
 resolver = "2"
 
 [workspace.dependencies]
