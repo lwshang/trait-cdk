@@ -13,6 +13,13 @@
             "candid": "counter.did",
             "wasm": "target/wasm32-unknown-unknown/release/build_script.wasm",
             "shrink": true
+        },
+        "stateful": {
+            "type": "custom",
+            "build": "sh build.sh stateful",
+            "candid": "counter.did",
+            "wasm": "target/wasm32-unknown-unknown/release/stateful.wasm",
+            "shrink": true
         }
     }
 }

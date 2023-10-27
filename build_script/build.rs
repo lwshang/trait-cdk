@@ -31,5 +31,5 @@ fn main() {
     // https://docs.rs/prost-build/latest/prost_build/struct.Config.html#method.compile_protos
     let out_dir = std::env::var("OUT_DIR").unwrap();
     let path = Path::new(&out_dir).join("counter.rs");
-    std::fs::write(&path, BINDING).unwrap();
+    std::fs::write(path, BINDING).unwrap();
 }
