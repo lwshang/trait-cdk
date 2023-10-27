@@ -5,17 +5,14 @@
             "build": "sh build.sh unit_struct",
             "candid": "counter.did",
             "wasm": "target/wasm32-unknown-unknown/release/unit_struct.wasm",
-            "shrink": true,
-            "metadata": [
-                {
-                    "name": "candid:service",
-                    "visibility": "public"
-                },
-                {
-                    "name": "candid:args",
-                    "visibility": "public"
-                }
-            ]
+            "shrink": true
+        },
+        "build_script": {
+            "type": "custom",
+            "build": "sh build.sh build_script",
+            "candid": "counter.did",
+            "wasm": "target/wasm32-unknown-unknown/release/build_script.wasm",
+            "shrink": true
         }
     }
 }
