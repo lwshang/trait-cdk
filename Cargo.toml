@@ -1,0 +1,6 @@
+[workspace]
+members = ["unit_struct"]
+resolver = "2"
+
+[workspace.dependencies]
+ic-cdk = "0.11"
