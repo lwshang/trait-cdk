@@ -35,5 +35,3 @@ The struct has state and the trait required methods take `&self` or `&mut self` 
 ### async_trait
 
 The approach can work well with async.
-
-**Note**: Depends on `async-trait` crate.

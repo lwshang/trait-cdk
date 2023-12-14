@@ -2,15 +2,15 @@
 
 // Expand Start
 trait Counter {
-    async fn inc();
-    async fn read() -> u64;
+    async fn inc(&mut self);
+    fn read(&self) -> u64;
 }
 
 #[export_name = "canister_update inc"]
 fn __canister_method_inc() {
     ic_cdk::setup();
     ic_cdk::spawn(async {
-        let _result = Canister::inc().await;
+        let _result = CANISTER.lock().unwrap().inc().await;
         ic_cdk::api::call::reply(())
     });
 }
@@ -19,26 +19,28 @@ fn __canister_method_inc() {
 fn __canister_method_read() {
     ic_cdk::setup();
     ic_cdk::spawn(async {
-        let result = Canister::read().await;
+        let result = CANISTER.lock().unwrap().read();
         ic_cdk::api::call::reply((result,))
     });
 }
+
+use once_cell::sync::Lazy;
+use std::sync::Mutex;
+static CANISTER: Lazy<Mutex<Canister>> = Lazy::new(|| Mutex::new(Default::default()));
+
 // Expand End
 
-use std::cell::Cell;
-
-thread_local! {
-    static COUNTER: Cell<u64> = Cell::new(0);
+#[derive(Default)]
+struct Canister {
+    counter: u64,
 }
 
-struct Canister;
-
 impl Counter for Canister {
-    async fn inc() {
-        COUNTER.set(COUNTER.get() + 1);
+    async fn inc(&mut self) {
+        self.counter += 1;
     }
 
-    async fn read() -> u64 {
-        COUNTER.get()
+    fn read(&self) -> u64 {
+        self.counter
     }
 }

@@ -27,6 +27,13 @@
             "candid": "counter.did",
             "wasm": "target/wasm32-unknown-unknown/release/async_trait.wasm",
             "shrink": true
+        },
+        "async_state": {
+            "type": "custom",
+            "build": "sh build.sh async_state",
+            "candid": "counter.did",
+            "wasm": "target/wasm32-unknown-unknown/release/async_state.wasm",
+            "shrink": true
         }
     }
 }
