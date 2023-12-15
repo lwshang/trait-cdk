@@ -10,7 +10,7 @@ trait Counter {
 fn __canister_method_inc() {
     ic_cdk::setup();
     ic_cdk::spawn(async {
-        let _result = CANISTER.lock().unwrap().inc().await;
+        let _result = CANISTER.with(|c| c.borrow_mut().inc().await);
         ic_cdk::api::call::reply(())
     });
 }
@@ -19,15 +19,14 @@ fn __canister_method_inc() {
 fn __canister_method_read() {
     ic_cdk::setup();
     ic_cdk::spawn(async {
-        let result = CANISTER.lock().unwrap().read();
+        let result = CANISTER.with(|c| c.borrow().read());
         ic_cdk::api::call::reply((result,))
     });
 }
 
-use once_cell::sync::Lazy;
-use std::sync::Mutex;
-static CANISTER: Lazy<Mutex<Canister>> = Lazy::new(|| Mutex::new(Default::default()));
-
+thread_local! {
+    static CANISTER: ::std::cell::RefCell<Canister> = ::std::cell::RefCell::new(Canister::default());
+}
 // Expand End
 
 #[derive(Default)]
